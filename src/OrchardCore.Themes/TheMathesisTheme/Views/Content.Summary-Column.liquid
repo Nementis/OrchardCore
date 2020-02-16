@@ -9,7 +9,13 @@
 			</div>
 			<div class="card-body">
 				<h6 class="card-category text-info">{{ Model.ContentItem.Content.Column.Field.Text }}</h6>
-				<p class="card-description mth-text-base">{{ Model.ContentItem.Content.Column.Description.Text }}</p>
+				<div class="card-description mth-text-base">
+					{% if Model.ContentItem.Content.Column.Description.Text.size > 475 %}
+						{{Model.ContentItem.Content.Column.Description.Text | truncate: 475 | raw}}
+					{% else %}
+						{{Model.ContentItem.Content.Column.Description.Text | raw}}
+					{% endif %}
+				</div>
 			</div>
 			<hr />
 			<div class="card-footer">
@@ -29,7 +35,13 @@
 				<h4 class="card-title mth-card-title">{{Model.ContentItem.Content.TitlePart.Title}}</h4>
 			</div>
 			<div class="card-body">
-				<p class="card-text mth-text-base">{{Model.ContentItem.Content.Column.Description.Text}}</p>
+				<div class="card-description mth-text-base">
+					{% if Model.ContentItem.Content.Column.Description.Text.size > 475 %}
+						{{Model.ContentItem.Content.Column.Description.Text | truncate: 475 | raw}}
+					{% else %}
+						{{Model.ContentItem.Content.Column.Description.Text | raw}}
+					{% endif %}
+				</div>
 			</div>
 			<hr/>
 			<div class="card-footer">
@@ -52,9 +64,13 @@
 			<div class="card-body">
 				<h4 class="card-title mth-card-title">{{Model.ContentItem.Content.TitlePart.Title}}</h4>
 				<h6 class="card-category text-muted">{{ Model.ContentItem.Content.Column.Field.Text }}</h6>
-				<p class="card-description mth-text-base">
-					{{Model.ContentItem.Content.Column.Description.Text}}
-				</p>
+				<div class="card-description mth-text-base">
+					{% if Model.ContentItem.Content.Column.Description.Text.size > 475 %}
+						{{Model.ContentItem.Content.Column.Description.Text | truncate: 475 | raw}}
+					{% else %}
+						{{Model.ContentItem.Content.Column.Description.Text | raw}}
+					{% endif %}
+				</div>
 			</div>
 			<div class="card-footer justify-content-center">
 				<a href="{{Model.ContentItem.Content.Column.LinkedinUrl.Text }}" class="btn btn-just-icon btn-linkedin btn-round">

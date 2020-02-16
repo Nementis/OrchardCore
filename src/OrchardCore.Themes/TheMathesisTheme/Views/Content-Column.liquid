@@ -62,19 +62,22 @@
 						</li>
 					</ul>
 				</div>
-				<div class="bd-sq-banner">
+				<div class="bd-sq-banner text-center">
 					{% render_section "LeftSquareBanner", required: false %}
 				</div>
 			</div>
 			<div class="d-none d-xl-block col-xl-2 bd-toc">
 				<div id="tagcloud" class="bd-cloud" >
 				</div>
-				<div class="bd-sq-banner">
+				<div class="bd-sq-banner text-center">
 					{% render_section "RightSquareBanner", required: false %}
 				</div>
 			</div>
 			<div class="col-md-9 col-xl-8 pl-md-5 bd-content py-2">
 				<div class="bd-main">
+					<div class="text-center">
+						{% render_section "TopBanner", required: false %}
+					</div>
 					{% if Request.Query.tag != nil %}
 					<div class="text-center pt-5">
 							<h2 class="mth-section-title">Tag: {{Request.Query.tag}}</h2>
@@ -84,7 +87,7 @@
 							<h2 class="mth-section-title">{{ Model.ContentItem.Content.TitlePart.Title }}</h2>
 						</div>
 						<div class="w-90 mx-auto">
-							<p class="mth-text-base">{{ Model.ContentItem.Content.Column.Description.Text }}</p>
+							<p class="mth-text-base">{{ Model.ContentItem.Content.Column.Description.Text | raw }}</p>
 						</div>
 					{% endif%}
 					<div class="w-90 mx-auto">

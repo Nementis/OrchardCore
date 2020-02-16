@@ -18,7 +18,7 @@
 			</p>
 			<p class="card-description mth-text-base">
 				{% assign abstract = Model.ContentItem.Content.BagPart.ContentItems | where: "ContentType", "Abstract" %}
-				{{abstract.first.HtmlBodyPart.Html | truncate: 475}}
+				{{abstract.first.HtmlBodyPart.Html | truncate: 475 | raw }}
 				<a href="{{Model.ContentItem | display_url }}">&nbsp;Read More</a>
 			</p>
 			<p class="author">
@@ -46,7 +46,7 @@
 			</p>
 			<p class="card-description mth-text-base">
 				{% assign abstract = Model.ContentItem.Content.BagPart.ContentItems | where: "ContentType", "Abstract" %}
-				{{abstract.first.HtmlBodyPart.Html | truncate: 475}}
+				{{abstract.first.HtmlBodyPart.Html | truncate: 475 | raw }}
 				<a href="{{Model.ContentItem | display_url }}">&nbsp;Read More</a>
 			</p>
 			<p class="author">
