@@ -1,0 +1,10 @@
+<div class="bd-main" id="article">
+	<div class="text-center">
+		{% render_section "TopBanner", required: false %}
+	</div>
+	<div class="row w-90 mx-auto">
+		{% for item in Model.ContentItems %}
+			{{ item | shape_build_display: "Detail" | shape_render }}
+		{% endfor %}
+	</div>
+</div>

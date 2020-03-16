@@ -13,6 +13,9 @@ namespace OrchardCore.Google
         public static readonly Permission ManageGoogleAnalytics
             = new Permission(nameof(ManageGoogleAnalytics), "Manage Google Analytics settings");
 
+        public static readonly Permission ManageGoogleAdSense
+            = new Permission(nameof(ManageGoogleAdSense), "Manage Google AdSense settings");
+
         public class GoogleAuthentication : IPermissionProvider
         {
             public Task<IEnumerable<Permission>> GetPermissionsAsync()
@@ -56,6 +59,30 @@ namespace OrchardCore.Google
                     Permissions = new[]
                     {
                         ManageGoogleAnalytics
+                    }
+                };
+            }
+        }
+
+        public class GoogleAdSense : IPermissionProvider
+        {
+            public Task<IEnumerable<Permission>> GetPermissionsAsync()
+            {
+                return Task.FromResult(new[]
+                    {
+                        ManageGoogleAdSense
+                    }
+                   .AsEnumerable());
+            }
+
+            public IEnumerable<PermissionStereotype> GetDefaultStereotypes()
+            {
+                yield return new PermissionStereotype
+                {
+                    Name = "Administrator",
+                    Permissions = new[]
+                    {
+                        ManageGoogleAdSense
                     }
                 };
             }
