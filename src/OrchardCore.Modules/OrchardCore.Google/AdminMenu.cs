@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Environment.Shell.Descriptor.Models;
@@ -70,7 +69,7 @@ namespace OrchardCore.Google
             return Task.CompletedTask;
         }
     }
-
+}
     [Feature(GoogleConstants.Features.GoogleAdSense)]
     public class GoogleAdSenseAdminMenu : INavigationProvider
     {
