@@ -47,7 +47,16 @@
 			<div class="card-footer">
 				<div class="card-stats justify-content-left">
 					{% assign column = Model.ContentItem | shape_build_display %}
-					<a href="{{Model.ContentItem | display_url }}" class="btn btn-round {{Model.ContentItem.Content.Column.Category.Text}}">{{Model.ContentItem.Content.Column.Button.Text }} ({{ column.Content.ListPart.ContentItems | size }})</a>
+					{% assign counter = 0 %}
+					{% for contentItem in column.Content.ListPart.ContentItems %}
+						{% if contentItem.ContentItem.ContentType == "Series" %}
+							{% assign series = contentItem | shape_build_display %}
+							{% assign counter = counter + series.Content.ListPart.ContentItems.size %}
+						{% else %}
+							{% assign counter = counter + 1 %}
+						{% endif %}
+					{% endfor %}
+					<a href="{{Model.ContentItem | display_url }}" class="btn btn-round {{Model.ContentItem.Content.Column.Category.Text}}">{{Model.ContentItem.Content.Column.Button.Text }} ({{ counter }})</a>
 				</div>
 				<div class="stats ml-auto">
 					{% if column.Content.ListPart.ContentItems.size > 0 %}

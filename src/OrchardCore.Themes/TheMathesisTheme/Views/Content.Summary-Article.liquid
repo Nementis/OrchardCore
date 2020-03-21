@@ -19,7 +19,7 @@
 			<p class="card-description mth-text-base">
 				{% assign abstract = Model.ContentItem.Content.BagPart.ContentItems | where: "ContentType", "Abstract" %}
 				{{abstract.first.HtmlBodyPart.Html | truncate: 475 | raw }}
-				<a href="{{Model.ContentItem | display_url }}">&nbsp;Read More</a>
+				<a href="{{Model.ContentItem | display_url }}">&nbsp;Continua</a>
 			</p>
 			<p class="author">
 				by <b>{{Model.ContentItem.Author}}</b>, <span id="{{Model.ContentItem.PublishedUtc | slugify }}"></span>
@@ -47,7 +47,7 @@
 			<p class="card-description mth-text-base">
 				{% assign abstract = Model.ContentItem.Content.BagPart.ContentItems | where: "ContentType", "Abstract" %}
 				{{abstract.first.HtmlBodyPart.Html | truncate: 475 | raw }}
-				<a href="{{Model.ContentItem | display_url }}">&nbsp;Read More</a>
+				<a href="{{Model.ContentItem | display_url }}">&nbsp;Continua</a>
 			</p>
 			<p class="author">
 				by <b>{{Model.ContentItem.Author}}</b>, <span id="{{Model.ContentItem.PublishedUtc | slugify }}"></span>

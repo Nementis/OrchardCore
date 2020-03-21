@@ -46,14 +46,41 @@
 											{{column-title}}
 										</a>
 										<ul>
-											{% for article in column.Content.ListPart.ContentItems %}
-												{% assign article-content = article.ContentItemId | content_item_id %}
-												{% assign article-url = article-content | display_url %}
-												<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
-													<a href="{{ article-url }}" target = "_top" >
-														{{ article-content.Content.TitlePart.Title }}
-													</a>
-												</li>
+											{% for content in column.Content.ListPart.ContentItems %}
+												{% if content.ContentType == "Article" %}
+													{% assign article-content = content.ContentItemId | content_item_id %}
+													{% assign article-url = article-content | display_url %}
+													<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
+														<a href="{{ article-url }}" target = "_top" >
+															{{ article-content.Content.TitlePart.Title }}
+														</a>
+													</li>
+												{% else %}
+													{% assign series = content | shape_build_display %}
+													{% assign seriesUrl = content | display_url %}
+													{% assign series-title = content.Content.TitlePart.Title%}
+													{% if current-url == seriesUrl %}
+														{% assign node-class = "folder expanded" %}
+													{% else %}
+														{% assign node-class = "folder" %}
+													{% endif %}
+													<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
+														<a href="{{seriesUrl}}" target ="_top">
+															{{series-title}}
+														</a>
+														<ul>
+															{% for article in series.Content.ListPart.ContentItems %}
+																{% assign article-content = article.ContentItemId | content_item_id %}
+																{% assign article-url = article-content | display_url %}
+																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																	<a href="{{ article-url }}" target = "_top" >
+																		{{ article-content.Content.TitlePart.Title }}
+																	</a>
+																</li>
+															{% endfor %}
+														</ul>
+													</li>
+												{% endif %}
 											{% endfor %}
 										</ul>
 									</li>

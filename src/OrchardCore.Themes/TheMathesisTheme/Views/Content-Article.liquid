@@ -25,8 +25,13 @@
 				</div>
 				<div id="tree" class="bd-tree">
 					{% assign current-url = Model.ContentItem | display_url %}
-					{% assign parentColumn = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
-					{% assign magazine = Content.ContentItemId[parentColumn.Content.ContainedPart.ListContentItemId] | shape_build_display %}
+					{% assign parent = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
+					{% if parent.ContentItem.ContentType == "Series" %}
+						{% assign parentColumn = Content.ContentItemId[parent.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
+					{% else %}
+						{% assign parentColumn = parent %}
+					{% endif %}
+					{% assign magazine = Content.ContentItemId[parentColumn.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
 					{% assign magazineTitle = magazine.ContentItem.Content.TitlePart.Title %}
 					<ul id="treeData" style="display: none;">
 						<li id="{{magazineTitle}}" class="folder expanded">
@@ -35,26 +40,53 @@
 							<ul>
 								{% for columnContentItem in magazine-columns.ContentItems %}
 									{% assign column = columnContentItem | shape_build_display %}
+									{% assign columnUrl = columnContentItem | display_url %}
 									{% assign column-title = columnContentItem.Content.TitlePart.Title%}
-									{% assign column-url = columnContentItem | display_url %}
-									<li id="{{magazineTitle}}.{{column-title}}" class="folder">
-										<a href="{{column-url}}" target ="_top">
+									{% if parentColumn.ContentItem.ContentItemId == column.ContentItem.ContentItemId %}
+										{% assign node-class = "folder expanded" %}
+									{% else %}
+										{% assign node-class = "folder" %}
+									{% endif %}
+									<li id="{{magazineTitle}}.{{column-title}}" class="{{node-class}}">
+										<a href="{{columnUrl}}" target ="_top">
 											{{column-title}}
 										</a>
 										<ul>
-											{% for article in column.Content.ListPart.ContentItems %}
-												{% assign article-content = article.ContentItemId | content_item_id %}
-												{% assign article-url = article-content | display_url %}
-												{% if current-url == article-url %}
-													{% assign node-class = "active focus" %}
+											{% for content in column.Content.ListPart.ContentItems %}
+												{% if content.ContentType == "Article" %}
+													{% assign article-content = content.ContentItemId | content_item_id %}
+													{% assign article-url = article-content | display_url %}
+													<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
+														<a href="{{ article-url }}" target = "_top" >
+															{{ article-content.Content.TitlePart.Title }}
+														</a>
+													</li>
 												{% else %}
-													{% assign node-class = "" %}
+													{% assign series = content | shape_build_display %}
+													{% assign seriesUrl = content | display_url %}
+													{% assign series-title = content.Content.TitlePart.Title%}
+													{% if parent.ContentItem.ContentItemId == series.ContentItem.ContentItemId %}
+														{% assign node-class = "folder expanded" %}
+													{% else %}
+														{% assign node-class = "folder" %}
+													{% endif %}
+													<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
+														<a href="{{seriesUrl}}" target ="_top">
+															{{series-title}}
+														</a>
+														<ul>
+															{% for article in series.Content.ListPart.ContentItems %}
+																{% assign article-content = article.ContentItemId | content_item_id %}
+																{% assign article-url = article-content | display_url %}
+																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																	<a href="{{ article-url }}" target = "_top" >
+																		{{ article-content.Content.TitlePart.Title }}
+																	</a>
+																</li>
+															{% endfor %}
+														</ul>
+													</li>
 												{% endif %}
-												<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}" class="{{node-class}}">
-													<a href="{{ article-url }}" target = "_top" >
-														{{ article-content.Content.TitlePart.Title }}
-													</a>
-												</li>
 											{% endfor %}
 										</ul>
 									</li>
