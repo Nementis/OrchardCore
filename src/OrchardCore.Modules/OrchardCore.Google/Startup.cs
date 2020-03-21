@@ -17,16 +17,9 @@ using OrchardCore.Navigation;
 using OrchardCore.Recipes;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Mvc;
 using OrchardCore.Google.AdSense;
 using OrchardCore.Google.AdSense.Drivers;
 using OrchardCore.Google.AdSense.Recipes;
-using OrchardCore.Google.Analytics;
-using OrchardCore.Google.Analytics.Drivers;
-using OrchardCore.Google.Analytics.Recipes;
-using OrchardCore.Recipes;
-using OrchardCore.Google.Authentication.Recipes;
 
 namespace OrchardCore.Google
 {
