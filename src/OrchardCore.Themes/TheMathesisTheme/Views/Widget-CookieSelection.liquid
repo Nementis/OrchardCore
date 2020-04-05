@@ -1,0 +1,85 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="cookieDetail">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">{{Model.ContentItem.Content.CookieSelection.Title.Text}}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieSelection.Description.Text | raw}}&nbsp;<a href="{{Model.ContentItem.Content.CookieSelection.PolicyLink.Url | href }}">{{Model.ContentItem.Content.CookieSelection.PolicyLink.Text}}</a>
+						</p>
+					</div>
+				</div>
+				<div class="row py-3">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieSelection.RememberDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" id="ckRemember"onclick="$('#ckRememberMain')[0].checked = $('#ckRemember')[0].checked">
+									<span class="toggle"></span>
+								</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieSelection.NecessaryDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" disabled="" id="ckMandatory">
+									<span class="toggle"></span>
+								</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieSelection.PerformanceDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" id="ckTracking">
+									<span class="toggle"></span>
+								</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieSelection.AdvertisingDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" id="ckAdvertise">
+									<span class="toggle"></span>
+								</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+					</div>
+					<div class="col-3" style="text-align:right">
+						<button class="btn btn-primary btn-round" style="width:165px;" data-dismiss="modal" onclick="CookiesManager.getUserChoices()">{{Model.ContentItem.Content.CookieSelection.SaveButtonText.Text}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

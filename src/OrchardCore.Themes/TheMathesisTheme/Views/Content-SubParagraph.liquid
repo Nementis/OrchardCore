@@ -1,2 +1,26 @@
-<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h5>
-{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+{% assign conditionCount = 0 %}
+{% if Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
+	{% assign conditionCount = conditionCount + 1%}
+{% endif %}
+{% if Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
+	{% assign conditionCount = conditionCount + 1%}
+{% endif %}
+
+{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+{% assign checkedConditions = 0 %}
+{% for cookie in cookies %}
+	{% if cookie == 't' and Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+	{% endif %}
+	{% if cookie == 'a' and Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+	{% endif %}
+{% endfor%}
+
+{% if checkedConditions >= conditionCount %}
+	<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h5>
+	{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+{% else %}
+	<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h5>
+	{{ Model.ContentItem.Content.SubParagraph.AlternateContent.Html | raw }}
+{% endif %}

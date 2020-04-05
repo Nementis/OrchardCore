@@ -1,0 +1,63 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="cookieConsent">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">{{Model.ContentItem.Content.CookieConsent.Title.Text}}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieConsent.Description.Text | raw}}&nbsp;<a href="{{Model.ContentItem.Content.CookieConsent.PolicyLink.Url | href }}">{{Model.ContentItem.Content.CookieConsent.PolicyLink.Text}}</a>
+						</p>
+					</div>
+				</div>
+				<div class="row py-3">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieConsent.RememberDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<div class="togglebutton">
+							<label>
+								<input type="checkbox" checked="" id="ckRememberMain" onclick="$('#ckRemember')[0].checked = $('#ckRememberMain')[0].checked">
+									<span class="toggle"></span>
+								</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieConsent.NecessaryDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<button class="btn btn-default btn-round" style="width:165px;" data-dismiss="modal" onclick="CookiesManager.mandatory();">{{Model.ContentItem.Content.CookieConsent.NecessaryButtonText.Text}}</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieConsent.CustomizeDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<button class="btn btn-default btn-round" style="width:165px;" data-dismiss="modal" onclick="CookiesManager.customize();">{{Model.ContentItem.Content.CookieConsent.CustomizeButtonText.Text}}</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-9">
+						<p class="mth-text-base">
+							{{Model.ContentItem.Content.CookieConsent.AllDescription.Text | raw}}
+						</p>
+					</div>
+					<div class="col-3" style="text-align:right">
+						<button class="btn btn-primary btn-round" style="width:165px;" data-dismiss="modal" onclick="CookiesManager.all();">{{Model.ContentItem.Content.CookieConsent.AllButtonText.Text}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

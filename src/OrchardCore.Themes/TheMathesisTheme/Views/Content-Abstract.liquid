@@ -1,4 +1,28 @@
 <div class="text-center pt-5">
 	<h2 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}" class="mth-section-title">{{ Model.ContentItem.Content.TitlePart.Title }}</h2>
 </div>
-{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+{% assign conditionCount = 0 %}
+{% if Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
+	{% assign conditionCount = conditionCount + 1%}
+{% endif %}
+{% if Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
+	{% assign conditionCount = conditionCount + 1%}
+{% endif %}
+
+{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+{% assign checkedConditions = 0 %}
+{% for cookie in cookies %}
+	{% if cookie == 't' and Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+	{% endif %}
+	{% if cookie == 'a' and Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+	{% endif %}
+{% endfor%}
+
+{{Request.Headers.User-agent}}
+{% if checkedConditions >= conditionCount %}
+	{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+{% else %}
+	{{ Model.ContentItem.Content.Abstract.AlternateContent.Html | raw }}
+{% endif %}

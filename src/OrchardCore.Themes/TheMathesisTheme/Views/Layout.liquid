@@ -4,6 +4,20 @@
 		<meta charset="utf-8" />
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<script>
+			YETT_WHITELIST = [
+			/js\.cookie\.js$/,
+			/jquery\.min\.js$/,
+			/popper\.min\.js$/,
+			/bootstrap-material-design\.min\.js$/,
+			/moment\.min\.js$/,
+			/bootstrap-datetimepicker\.js$/,
+			/nouislider\.min\.js$/,
+			/buttons\.js$/,
+			/material-kit\.js\?v=2\.2\.0$/,
+			/cookie-consent\.js$/
+			]
+		</script>
 
 		{% render_section "HeadMeta", required: false %}
 
@@ -17,10 +31,14 @@
 		{% style name:"TheMathesisTheme-Material-Kit" %}
 		{% style name:"TheMathesisTheme-Mathesis-Kit" %}
 
+		{% script name:"TheMathesisTheme-yett", at:"Head" %}
+
+		{% script name:"TheMathesisTheme-js-cookies", at:"Foot" %}
 		{% script name:"TheMathesisTheme-jQuery", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Popper", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Bootstrap-Material", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Material-Kit-Script", at:"Foot" %}
+		{% script name:"TheMathesisTheme-Cookie-Consent", at:"Foot" %}
 
 		{% resources type: "HeadScript" %}
 		{% resources type: "HeadLink" %}
