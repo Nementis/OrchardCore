@@ -41,5 +41,7 @@ $(function () {
 		$.ui.fancytree.getTree().filterNodes($(this).val());
 	});
 
-	$("#tagcloud").jQCloud(words);
+	if (typeof words !== 'undefined') {
+		$("#tagcloud").jQCloud(words);
+	}
 });

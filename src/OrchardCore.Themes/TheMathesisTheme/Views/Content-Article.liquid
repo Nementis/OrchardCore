@@ -14,6 +14,12 @@
 	<title>{{Site.SiteName}} - {{Model.ContentItem.Content.TitlePart.Title}}</title>
 {% endzone %}
 
+{% zone "FooterSpy" %}
+	<script type="text/javascript">
+		$('#article').scrollspy({target: '#navbar-toc', offset: 60});
+	</script>
+{% endzone %}
+
 {% shape "menu", alias: "alias:site-menu", cache_id: "site-menu-sticky", cache_tag: "alias:site-menu", alternate: "Menu__Sticky" %}
 
 <div class="main main-raised" id="main" style="margin-top: 90px;">
