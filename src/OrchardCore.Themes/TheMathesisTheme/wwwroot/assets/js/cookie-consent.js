@@ -48,11 +48,11 @@ CookiesManager = {
         var options = "m";
         if (tracking) {
             options = options.concat(",t");
-            window.yett.unblock('tracking.js');
+            window.yett.unblock("/www.googletagmanager.com");
         }
         if( advertising) {
             options = options.concat(",a");
-            window.yett.unblock('advertise.js');
+					window.yett.unblock("/pagead2.googlesyndication.com");
         }
         if ( remember ) {
             options = options.concat(",r");

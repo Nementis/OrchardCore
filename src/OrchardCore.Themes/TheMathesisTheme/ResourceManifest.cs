@@ -121,6 +121,7 @@ namespace TheMathesisTheme
 			manifest
 			 .DefineScript("TheMathesisTheme-Cookie-Consent")
 			 .SetDependencies("TheMathesisTheme-Material-Kit-Script")
+			 .SetDependencies("TheMathesisTheme-js-cookies")
 			 .SetUrl("~/TheMathesisTheme/assets/js/cookie-consent.js");
 
 			manifest

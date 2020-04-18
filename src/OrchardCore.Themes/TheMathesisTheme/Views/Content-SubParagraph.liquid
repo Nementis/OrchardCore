@@ -1,21 +1,26 @@
 {% assign conditionCount = 0 %}
-{% if Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
-	{% assign conditionCount = conditionCount + 1%}
-{% endif %}
-{% if Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
-	{% assign conditionCount = conditionCount + 1%}
-{% endif %}
-
-{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
 {% assign checkedConditions = 0 %}
-{% for cookie in cookies %}
-	{% if cookie == 't' and Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
-		{% assign checkedConditions = checkedConditions + 1 %}
+
+{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
+
+{% if stringParts.size == 1 %}
+	{% if Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
 	{% endif %}
-	{% if cookie == 'a' and Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
-		{% assign checkedConditions = checkedConditions + 1 %}
+	{% if Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
 	{% endif %}
-{% endfor%}
+
+	{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+	{% for cookie in cookies %}
+		{% if cookie == 't' and Model.ContentItem.Content.SubParagraph.TrackingRequired.Value == true %}
+			{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% if cookie == 'a' and Model.ContentItem.Content.SubParagraph.AdvertiseRequired.Value == true %}
+			{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+	{% endfor%}
+{% endif %}
 
 {% if checkedConditions >= conditionCount %}
 	<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h5>
