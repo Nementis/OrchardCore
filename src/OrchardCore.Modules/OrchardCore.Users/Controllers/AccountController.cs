@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -43,7 +42,7 @@ namespace OrchardCore.Users.Controllers
         private readonly IClock _clock;
         private readonly IDistributedCache _distributedCache;
         private readonly IEnumerable<IExternalLoginEventHandler> _externalLoginHandlers;
-        private readonly IStringLocalizer<AccountController> S;
+        private readonly IStringLocalizer S;
 
         public AccountController(
             IUserService userService,
@@ -142,7 +141,7 @@ namespace OrchardCore.Users.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        async Task<bool> AddConfirmEmailError(IUser user)
+        private async Task<bool> AddConfirmEmailError(IUser user)
         {
             var registrationSettings = (await _siteService.GetSiteSettingsAsync()).As<RegistrationSettings>();
             if (registrationSettings.UsersMustValidateEmail == true)
@@ -154,12 +153,12 @@ namespace OrchardCore.Users.Controllers
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
-        bool AddUserEnabledError(IUser user)
-        {           
+
+        private bool AddUserEnabledError(IUser user)
+        {
             var localUser = user as User;
 
             if (localUser == null || !localUser.IsEnabled)
@@ -167,7 +166,7 @@ namespace OrchardCore.Users.Controllers
                 ModelState.AddModelError(String.Empty, S["Your account is disabled. Please contact an administrator."]);
                 return true;
             }
-            
+
             return false;
         }
 
@@ -181,7 +180,7 @@ namespace OrchardCore.Users.Controllers
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(model) && ModelState.IsValid)
             {
                 var disableLocalLogin = (await _siteService.GetSiteSettingsAsync()).As<LoginSettings>().DisableLocalLogin;
                 if (disableLocalLogin)
@@ -240,7 +239,7 @@ namespace OrchardCore.Users.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (TryValidateModel(model) && ModelState.IsValid)
             {
                 var user = await _userService.GetAuthenticatedUserAsync(User);
                 if (await _userService.ChangePasswordAsync(user, model.CurrentPassword, model.Password, (key, message) => ModelState.AddModelError(key, message)))
@@ -293,7 +292,6 @@ namespace OrchardCore.Users.Controllers
             }
             return RedirectToLocal(returnUrl);
         }
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -396,8 +394,7 @@ namespace OrchardCore.Users.Controllers
             }
             else
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                            ?? info.Principal.FindFirstValue(OpenIdConnectConstants.Claims.Email);
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? info.Principal.FindFirstValue("email");
 
                 if (!string.IsNullOrWhiteSpace(email))
                     user = await _userManager.FindByEmailAsync(email);
@@ -492,7 +489,6 @@ namespace OrchardCore.Users.Controllers
 
             if (info == null)
             {
-
                 _logger.LogWarning("Error loading external login info.");
                 return NotFound();
             }
@@ -514,8 +510,7 @@ namespace OrchardCore.Users.Controllers
 
             if (model.NoEmail)
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    ?? info.Principal.FindFirstValue(OpenIdConnectConstants.Claims.Email);
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? info.Principal.FindFirstValue("email");
                 model.Email = email;
             }
 
@@ -566,8 +561,7 @@ namespace OrchardCore.Users.Controllers
             var settings = (await _siteService.GetSiteSettingsAsync()).As<RegistrationSettings>();
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email)
-            ?? info.Principal.FindFirstValue(OpenIdConnectConstants.Claims.Email);
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? info.Principal.FindFirstValue("email");
 
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -576,7 +570,6 @@ namespace OrchardCore.Users.Controllers
                 _logger.LogWarning("Error loading external login info.");
                 return NotFound();
             }
-
 
             if (user == null)
             {
@@ -617,7 +610,7 @@ namespace OrchardCore.Users.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return Unauthorized();
+                return Forbid();
             }
 
             var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
@@ -697,7 +690,7 @@ namespace OrchardCore.Users.Controllers
             return RedirectToAction(nameof(ExternalLogins));
         }
 
-        async Task<string> GenerateUsername(ExternalLoginInfo info)
+        private async Task<string> GenerateUsername(ExternalLoginInfo info)
         {
             var now = new TimeSpan(_clock.UtcNow.Ticks) - new TimeSpan(DateTime.UnixEpoch.Ticks);
             var ret = string.Concat("u" + Convert.ToInt32(now.TotalSeconds).ToString());

@@ -4,6 +4,16 @@
 		<meta charset="utf-8" />
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		{% assign userAgent = Request.Headers.User-agent%}
+
+		{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
+		{% if stringParts.size == 1 %}
+			<script>
+				YETT_BLACKLIST = [/www\.googletagmanager\.com/,/pagead2\.googlesyndication\.com/]
+			</script>
+			{% script name:"TheMathesisTheme-Cookie-Consent", at:"Foot" %}
+			{% script name:"TheMathesisTheme-yett", at:"Head" %}
+		{% endif %}
 
 		{% render_section "HeadMeta", required: false %}
 
@@ -17,12 +27,12 @@
 		{% style name:"TheMathesisTheme-Material-Kit" %}
 		{% style name:"TheMathesisTheme-Mathesis-Kit" %}
 
+
+		{% script name:"TheMathesisTheme-js-cookies", at:"Foot" %}
 		{% script name:"TheMathesisTheme-jQuery", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Popper", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Bootstrap-Material", at:"Foot" %}
 		{% script name:"TheMathesisTheme-Material-Kit-Script", at:"Foot" %}
-
-
 
 		{% resources type: "HeadScript" %}
 		{% resources type: "HeadLink" %}
@@ -35,9 +45,7 @@
 		{% render_section "Footer", required: false %}
 
 		{% resources type: "FootScript" %}
+		{% render_section "FooterSpy", required: false %}
 
-		<script type="text/javascript">
-			$('#article').scrollspy({target: '#navbar-toc', offset: 60});
-		</script>
 	</body>
 </html>

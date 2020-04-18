@@ -51,6 +51,14 @@ namespace TheMathesisTheme
 			 .SetUrl("~/TheMathesisTheme/assets/css/jqcloud.css");
 
 			manifest
+			 .DefineScript( "TheMathesisTheme-yett" )
+			 .SetUrl( "~/TheMathesisTheme/assets/js/plugins/yett.min.js" );
+
+			manifest
+			 .DefineScript("TheMathesisTheme-js-cookies")
+			 .SetUrl("~/TheMathesisTheme/assets/js/plugins/js.cookie.js");
+
+			manifest
 			 .DefineScript("TheMathesisTheme-jQuery")
 			 .SetUrl("~/TheMathesisTheme/assets/js/core/jquery.min.js");
 
@@ -109,6 +117,12 @@ namespace TheMathesisTheme
 			 .DefineScript("TheMathesisTheme-Material-Kit-Script")
 			 .SetDependencies("TheMathesisTheme-Bootstrap-Material")
 			 .SetUrl("~/TheMathesisTheme/assets/js/material-kit.js?v=2.1.0");
+
+			manifest
+			 .DefineScript("TheMathesisTheme-Cookie-Consent")
+			 .SetDependencies("TheMathesisTheme-Material-Kit-Script")
+			 .SetDependencies("TheMathesisTheme-js-cookies")
+			 .SetUrl("~/TheMathesisTheme/assets/js/cookie-consent.js");
 
 			manifest
 			 .DefineScript("TheMathesisTheme-Mathesis-Script")

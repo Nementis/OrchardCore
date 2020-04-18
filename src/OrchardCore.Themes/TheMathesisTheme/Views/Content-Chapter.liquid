@@ -1,2 +1,32 @@
-<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h3>
-<p class="mth-text-base">{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}</p>
+{% assign conditionCount = 0 %}
+{% assign checkedConditions = 0 %}
+
+{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
+
+{% if stringParts.size == 1 %}
+	{% if Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+	{% endif %}
+	{% if Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+	{% endif %}
+
+	{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+	{% for cookie in cookies %}
+		{% if cookie == 't' and Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
+			{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% if cookie == 'a' and Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
+			{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+	{% endfor%}
+{% endif %}
+
+{% if checkedConditions >= conditionCount %}
+	<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h3>
+	{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+{% else %}
+	<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h3>
+	{{ Model.ContentItem.Content.Chapter.AlternateContent.Html | raw }}
+{% endif %}
+

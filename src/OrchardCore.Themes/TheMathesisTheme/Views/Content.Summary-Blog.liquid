@@ -15,7 +15,11 @@
 					<a href="{{Model.ContentItem | display_url}}">{{Model.ContentItem.Content.LandingHeader.Payoff.Text}}</a>
 				</h3>
 				<p class="card-description mth-text-base">
-					{{Model.ContentItem.Content.Blog.Description.Text | truncate: 450}}
+					{% if Model.ContentItem.Content.Blog.Description.Text.size > 475 %}
+						{{Model.ContentItem.Content.Blog.Description.Text | truncate: 475 | raw}}
+					{% else %}
+						{{Model.ContentItem.Content.Blog.Description.Text | raw}}
+					{% endif %}
 					<a href="{{Model.ContentItem | display_url }}">&nbsp;{{Model.ContentItem.Content.LandingHeader.Button.Text}}</a>
 				</p>
 			</div>
@@ -32,7 +36,11 @@
 					<a href="{{Model.ContentItem | display_url}}">{{Model.ContentItem.Content.LandingHeader.Payoff.Text}}</a>
 				</h3>
 				<p class="card-description mth-text-base">
-					{{Model.ContentItem.Content.Magazine.Description.Text | truncate: 450}}
+					{% if Model.ContentItem.Content.Blog.Description.Text.size > 475 %}
+						{{Model.ContentItem.Content.Blog.Description.Text | truncate: 475 | raw}}
+					{% else %}
+						{{Model.ContentItem.Content.Blog.Description.Text | raw}}
+					{% endif %}
 					<a href="{{Model.ContentItem | display_url }}">&nbsp;{{Model.ContentItem.Content.LandingHeader.Button.Text}}</a>
 				</p>
 			</div>

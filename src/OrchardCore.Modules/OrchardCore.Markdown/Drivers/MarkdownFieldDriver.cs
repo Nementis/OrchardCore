@@ -16,7 +16,7 @@ namespace OrchardCore.Markdown.Drivers
     {
         private readonly ILiquidTemplateManager _liquidTemplateManager;
         private readonly HtmlEncoder _htmlEncoder;
-        private readonly IStringLocalizer<MarkdownFieldDisplayDriver> S;
+        private readonly IStringLocalizer S;
 
         public MarkdownFieldDisplayDriver(ILiquidTemplateManager liquidTemplateManager, IStringLocalizer<MarkdownFieldDisplayDriver> localizer, HtmlEncoder htmlEncoder)
         {
@@ -39,8 +39,8 @@ namespace OrchardCore.Markdown.Drivers
 
                 model.Html = Markdig.Markdown.ToHtml(model.Markdown ?? "");
             })
-            .Location("Content")
-            .Location("SummaryAdmin", "");
+            .Location("Detail", "Content")
+            .Location("Summary", "Content");
         }
 
         public override IDisplayResult Edit(MarkdownField field, BuildFieldEditorContext context)

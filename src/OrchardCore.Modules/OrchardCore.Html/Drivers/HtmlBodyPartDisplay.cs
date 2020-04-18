@@ -16,7 +16,7 @@ namespace OrchardCore.Html.Drivers
     {
         private readonly ILiquidTemplateManager _liquidTemplateManager;
         private readonly HtmlEncoder _htmlEncoder;
-        private readonly IStringLocalizer<HtmlBodyPartDisplay> S;
+        private readonly IStringLocalizer S;
 
         public HtmlBodyPartDisplay(ILiquidTemplateManager liquidTemplateManager, IStringLocalizer<HtmlBodyPartDisplay> localizer, HtmlEncoder htmlEncoder)
         {
@@ -27,7 +27,7 @@ namespace OrchardCore.Html.Drivers
 
         public override IDisplayResult Display(HtmlBodyPart HtmlBodyPart, BuildPartDisplayContext context)
         {
-            return Initialize<HtmlBodyPartViewModel>("HtmlBodyPart", m => BuildViewModelAsync(m, HtmlBodyPart))
+            return Initialize<HtmlBodyPartViewModel>(GetDisplayShapeType(context), m => BuildViewModelAsync(m, HtmlBodyPart))
                 .Location("Detail", "Content:5")
                 .Location("Summary", "Content:10");
         }
