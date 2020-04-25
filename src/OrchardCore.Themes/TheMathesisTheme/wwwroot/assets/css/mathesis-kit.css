@@ -179,13 +179,13 @@ h3 a:hover, h3 a:focus {
 .bd-toc {
   -webkit-box-ordinal-group: 3;
   -ms-flex-order: 2;
-  order: 2;
-  font-size: 0.875rem; }
+  order: 2; }
   @supports ((position: -webkit-sticky) or (position: sticky)) {
     .bd-toc {
       position: -webkit-sticky;
       position: sticky;
       top: 4rem;
+      height: calc(100vh - 9rem);
       overflow-y: auto; } }
 
 .section-nav {
@@ -406,10 +406,9 @@ h3 a:hover, h3 a:focus {
 
 .bd-cloud {
   overflow: auto;
-  height: calc(100vh - 550px); }
+  height: calc(100vh - 500px); }
 
 .bd-sq-banner {
-  height: 270px;
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
@@ -1115,7 +1114,9 @@ h3 a:hover, h3 a:focus {
     align-self: stretch !important; } }
 
 .content-abstract {
-  text-align: center; }
+  text-align: center;
+  float: none;
+  overflow: hidden; }
   .content-abstract > h1 {
     font-family: Montserrat,Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
     font-weight: 700;
