@@ -23,119 +23,138 @@
 {% shape "menu", alias: "alias:site-menu", cache_id: "site-menu-sticky", cache_tag: "alias:site-menu", alternate: "Menu__Sticky" %}
 
 <div class="main main-raised" id="main" style="margin-top: 90px;">
-	<div class="container-fluid">
-		<div class="row flex-xl-nowrap">
+	<div class="container-fluid h-100">
+		<div class="row flex-xl-nowrap h-100">
 			<div class="col-md-3 col-xl-2 bd-sidebar">
-				<div class="py-2 bd-find">
-					<input type="text" class="form-control" placeholder="Filter..." name="search" autocomplete="off">
-				</div>
-				<div id="tree" class="bd-tree">
-					{% assign current-url = Model.ContentItem | display_url %}
-					{% assign parent = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
-					{% if parent.ContentItem.ContentType == "Series" %}
-						{% assign parentColumn = Content.ContentItemId[parent.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
-					{% else %}
-						{% assign parentColumn = parent %}
-					{% endif %}
-					{% assign magazine = Content.ContentItemId[parentColumn.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
-					{% assign magazineTitle = magazine.ContentItem.Content.TitlePart.Title %}
-					<ul id="treeData" style="display: none;">
-						<li id="{{magazineTitle}}" class="folder expanded">
-							{{magazineTitle}}
-							{% assign magazine-columns = magazine.Content.ListPart%}
-							<ul>
-								{% for columnContentItem in magazine-columns.ContentItems %}
-									{% assign column = columnContentItem | shape_build_display %}
-									{% assign columnUrl = columnContentItem | display_url %}
-									{% assign column-title = columnContentItem.Content.TitlePart.Title%}
-									{% if parentColumn.ContentItem.ContentItemId == column.ContentItem.ContentItemId %}
-										{% assign node-class = "folder expanded" %}
-									{% else %}
-										{% assign node-class = "folder" %}
-									{% endif %}
-									<li id="{{magazineTitle}}.{{column-title}}" class="{{node-class}}">
-										<a href="{{columnUrl}}" target ="_top">
-											{{column-title}}
-										</a>
+				<div class="h-100 d-flex flex-column">
+					<div class="row">
+						<div class="py-2 bd-find col-12">
+							<input type="text" class="form-control" placeholder="Filter..." name="search" autocomplete="off">
+						</div>
+					</div>
+					<div class="row flex-grow-1">
+						<div class="col-12">
+							<div id="tree" class="bd-tree">
+								{% assign current-url = Model.ContentItem | display_url %}
+								{% assign parent = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
+								{% if parent.ContentItem.ContentType == "Series" %}
+									{% assign parentColumn = Content.ContentItemId[parent.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
+								{% else %}
+									{% assign parentColumn = parent %}
+								{% endif %}
+								{% assign magazine = Content.ContentItemId[parentColumn.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
+								{% assign magazineTitle = magazine.ContentItem.Content.TitlePart.Title %}
+								<ul id="treeData" style="display: none;">
+									<li id="{{magazineTitle}}" class="folder expanded">
+										{{magazineTitle}}
+										{% assign magazine-columns = magazine.Content.ListPart%}
 										<ul>
-											{% for content in column.Content.ListPart.ContentItems %}
-												{% if content.ContentType == "Article" %}
-													{% assign article-content = content.ContentItemId | content_item_id %}
-													{% assign article-url = article-content | display_url %}
-													<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
-														<a href="{{ article-url }}" target = "_top" >
-															{{ article-content.Content.TitlePart.Title }}
-														</a>
-													</li>
+											{% for columnContentItem in magazine-columns.ContentItems %}
+												{% assign column = columnContentItem | shape_build_display %}
+												{% assign columnUrl = columnContentItem | display_url %}
+												{% assign column-title = columnContentItem.Content.TitlePart.Title%}
+												{% if parentColumn.ContentItem.ContentItemId == column.ContentItem.ContentItemId %}
+													{% assign node-class = "folder expanded" %}
 												{% else %}
-													{% assign series = content | shape_build_display %}
-													{% assign seriesUrl = content | display_url %}
-													{% assign series-title = content.Content.TitlePart.Title%}
-													{% if parent.ContentItem.ContentItemId == series.ContentItem.ContentItemId %}
-														{% assign node-class = "folder expanded" %}
-													{% else %}
-														{% assign node-class = "folder" %}
-													{% endif %}
-													<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
-														<a href="{{seriesUrl}}" target ="_top">
-															{{series-title}}
-														</a>
-														<ul>
-															{% for article in series.Content.ListPart.ContentItems %}
-																{% assign article-content = article.ContentItemId | content_item_id %}
+													{% assign node-class = "folder" %}
+												{% endif %}
+												<li id="{{magazineTitle}}.{{column-title}}" class="{{node-class}}">
+													<a href="{{columnUrl}}" target ="_top">
+														{{column-title}}
+													</a>
+													<ul>
+														{% for content in column.Content.ListPart.ContentItems %}
+															{% if content.ContentType == "Article" %}
+																{% assign article-content = content.ContentItemId | content_item_id %}
 																{% assign article-url = article-content | display_url %}
-																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
 																	<a href="{{ article-url }}" target = "_top" >
 																		{{ article-content.Content.TitlePart.Title }}
 																	</a>
 																</li>
-															{% endfor %}
-														</ul>
-													</li>
-												{% endif %}
-											{% endfor %}
+															{% else %}
+																{% assign series = content | shape_build_display %}
+																{% assign seriesUrl = content | display_url %}
+																{% assign series-title = content.Content.TitlePart.Title%}
+																{% if parent.ContentItem.ContentItemId == series.ContentItem.ContentItemId %}
+																	{% assign node-class = "folder expanded" %}
+																{% else %}
+																	{% assign node-class = "folder" %}
+																{% endif %}
+																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
+																	<a href="{{seriesUrl}}" target ="_top">
+																		{{series-title}}
+																	</a>
+																	<ul>
+																		{% for article in series.Content.ListPart.ContentItems %}
+																			{% assign article-content = article.ContentItemId | content_item_id %}
+																			{% assign article-url = article-content | display_url %}
+																			<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																				<a href="{{ article-url }}" target = "_top" >
+																					{{ article-content.Content.TitlePart.Title }}
+																				</a>
+																			</li>
+																		{% endfor %}
+																	</ul>
+																</li>
+															{% endif %}
+														{% endfor %}
+													</ul>
+												</li>
+											{% endfor%}
 										</ul>
 									</li>
-								{% endfor%}
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="bd-sq-banner text-center">
-					{% render_section "LeftSquareBanner", required: false %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row align-items-end justify-content-center bd-sq-banner">
+						<div class="col">
+							{% render_section "LeftSquareBanner", required: false %}
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="d-none d-xl-block col-xl-2 bd-toc">
-				<div class="bd-post-info py-2">
-					<b>Created</b>: {{ Model.ContentItem.CreatedUtc | date: "%d %b %Y" }}<br/>
-					<b>Last Updated</b>: {{ Model.ContentItem.PublishedUtc | date: "%d %b %Y" }}
-					<div class="blog-tags">
-						<b>Tags</b>
-						{% assign tags = Model.ContentItem.Content.Article.Tags.Text | split: "," %}
-						{% for tag in tags %}
-							<span class="badge badge-primary badge-pill">{{tag}}</span>
-						{% endfor %}
-					</div>
-				</div>
-				<div class="bd-post-toc">
-					<div class="pt-2">
-						<nav id="navbar-toc" class="navbar mth-toc-nav">
-							<nav class="nav flex-column">
-								{% for header in Model.ContentItem.Content.BagPart.ContentItems %}
-									{% case header.ContentType %}
-										{% when "Paragraph" %}
-											{% assign indent = "pl-4" %}
-										{% when "SubParagraph" %}
-											{% assign indent = "pl-5" %}
-									{% endcase %}
-									<a class="mth-toc-link nav-link {{indent}}" href="#{{header.TitlePart.Title | slugify}}">{{header.TitlePart.Title}}</a>
+			<div class="col-md-3 col-xl-2 bd-toc">
+				<div class="h-100 d-flex flex-column">
+					<div class="row">
+						<div class="py-2 mth-toc-info col-12">
+							<b>Created</b>: {{ Model.ContentItem.CreatedUtc | date: "%d %b %Y" }}<br/>
+							<b>Last Updated</b>: {{ Model.ContentItem.PublishedUtc | date: "%d %b %Y" }}<br/>
+							{% if Model.ContentItem.Content.Article.SourceRepository.Text | size > 0%}
+								<b>Source Repository</b>: <a href="{{ Model.ContentItem.Content.Article.SourceRepository.Url | href }}">{{ Model.ContentItem.Content.Article.SourceRepository.Text }}</a>
+							{% endif %}
+							<div class="blog-tags">
+								<b>Tags</b>
+								{% assign tags = Model.ContentItem.Content.Article.Tags.Text | split: "," %}
+								{% for tag in tags %}
+									<span class="badge badge-primary badge-pill">{{tag}}</span>
 								{% endfor %}
-							</nav>
-						</nav>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="bd-sq-banner text-center">
-					{% render_section "RightSquareBanner", required: false %}
+					<div class="row flex-grow-1 bd-post-toc">
+						<div class="col-12">
+							<nav id="navbar-toc" class="navbar mth-toc-nav p2">
+								<nav class="nav flex-column">
+									{% for header in Model.ContentItem.Content.BagPart.ContentItems %}
+										{% case header.ContentType %}
+											{% when "Paragraph" %}
+												{% assign indent = "pad-paragraph" %}
+											{% when "SubParagraph" %}
+												{% assign indent = "pad-sub-paragraph" %}
+										{% endcase %}
+										<a class="mth-toc-link nav-link {{indent}}" href="#{{header.TitlePart.Title | slugify}}">{{header.TitlePart.Title}}</a>
+									{% endfor %}
+								</nav>
+							</nav>
+						</div>
+					</div>
+					<div class="row align-items-end justify-content-center bd-sq-banner">
+						<div class="col">
+							{% render_section "RightSquareBanner", required: false %}
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-9 col-xl-8 pl-md-5 bd-content py-2" style="position: relative;">

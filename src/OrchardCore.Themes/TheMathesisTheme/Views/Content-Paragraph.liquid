@@ -1,31 +1,35 @@
-{% assign conditionCount = 0 %}
-{% assign checkedConditions = 0 %}
+<div class="row w-90 mx-auto">
+	<div class="pt-5 content-paragraph">
+		{% assign conditionCount = 0 %}
+		{% assign checkedConditions = 0 %}
 
-{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
+		{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
 
-{% if stringParts.size == 1 %}
-	{% if Model.ContentItem.Content.Paragraph.TrackingRequired.Value == true %}
-		{% assign conditionCount = conditionCount + 1%}
-	{% endif %}
-	{% if Model.ContentItem.Content.Paragraph.AdvertiseRequired.Value == true %}
-		{% assign conditionCount = conditionCount + 1%}
-	{% endif %}
+		{% if stringParts.size == 1 %}
+			{% if Model.ContentItem.Content.Paragraph.TrackingRequired.Value == true %}
+				{% assign conditionCount = conditionCount + 1%}
+			{% endif %}
+			{% if Model.ContentItem.Content.Paragraph.AdvertiseRequired.Value == true %}
+				{% assign conditionCount = conditionCount + 1%}
+			{% endif %}
 
-	{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
-	{% for cookie in cookies %}
-		{% if cookie == 't' and Model.ContentItem.Content.Paragraph.TrackingRequired.Value == true %}
-			{% assign checkedConditions = checkedConditions + 1 %}
+			{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+			{% for cookie in cookies %}
+				{% if cookie == 't' and Model.ContentItem.Content.Paragraph.TrackingRequired.Value == true %}
+					{% assign checkedConditions = checkedConditions + 1 %}
+				{% endif %}
+				{% if cookie == 'a' and Model.ContentItem.Content.Paragraph.AdvertiseRequired.Value == true %}
+					{% assign checkedConditions = checkedConditions + 1 %}
+				{% endif %}
+			{% endfor%}
 		{% endif %}
-		{% if cookie == 'a' and Model.ContentItem.Content.Paragraph.AdvertiseRequired.Value == true %}
-			{% assign checkedConditions = checkedConditions + 1 %}
-		{% endif %}
-	{% endfor%}
-{% endif %}
 
-{% if checkedConditions >= conditionCount %}
-	<h4 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h4>
-	{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
-{% else %}
-	<h4 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h4>
-	{{ Model.ContentItem.Content.Paragraph.AlternateContent.Html | raw }}
-{% endif %}
+		{% if checkedConditions >= conditionCount %}
+			<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h3>
+			{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+		{% else %}
+			<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h3>
+			{{ Model.ContentItem.Content.Paragraph.AlternateContent.Html | raw }}
+		{% endif %}
+	</div>
+</div>
