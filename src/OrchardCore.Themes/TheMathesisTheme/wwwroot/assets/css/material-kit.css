@@ -11943,7 +11943,7 @@ footer {
   margin-top: 24px;
   margin-right: 10px; }
   .info-horizontal .icon > i {
-    font-size: 2.25rem; }
+    font-size: 2.5rem; }
 
 .info-horizontal .description {
   overflow: hidden; }
@@ -11984,23 +11984,23 @@ html * {
   -moz-osx-font-smoothing: grayscale; }
 
 h1, .h1 {
-  font-size: 3.3125rem;
+  font-size: 3rem;
   line-height: 1.15em; }
 
 h2, .h2 {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   line-height: 1.5em; }
 
 h3, .h3 {
-  font-size: 1.5625rem;
+  font-size: 1.9rem;
   line-height: 1.4em; }
 
 h4, .h4 {
-  font-size: 1.125rem;
+  font-size: 1.45rem;
   line-height: 1.5em; }
 
 h5, .h5 {
-  font-size: 1.0625rem;
+  font-size: 1.2rem;
   line-height: 1.55em;
   margin-bottom: 15px; }
 
@@ -12244,7 +12244,7 @@ h2.title {
   background-color: #fff;
   border: none;
   padding: 15px 15px 5px;
-  font-size: 1.125rem;
+  font-size: 1.45rem;
   margin: 0;
   color: #555; }
 
@@ -13968,7 +13968,7 @@ h2.title {
 
 .table > thead > tr > th {
   border-bottom-width: 1px;
-  font-size: 1.0625rem;
+  font-size: 1.2rem;
   font-weight: 300; }
 
 .table .form-check {
@@ -14013,7 +14013,7 @@ h2.title {
 
 .table .td-total {
   font-weight: 500;
-  font-size: 1.0625rem;
+  font-size: 1.2rem;
   padding-top: 20px;
   text-align: right; }
 
@@ -14045,7 +14045,7 @@ h2.title {
 
 .table-shopping .td-number {
   font-weight: 300;
-  font-size: 1.125rem; }
+  font-size: 1.45rem; }
 
 .table-shopping .td-name {
   min-width: 200px; }
@@ -14423,7 +14423,7 @@ thead.thead-inverse th,
         bottom: 15px;
         left: 15px;
         color: #fff;
-        font-size: 1.125rem;
+        font-size: 1.45rem;
         text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5); }
       .card .card-header.card-header-image .colored-shadow {
         -webkit-transform: scale(0.94);
@@ -15103,7 +15103,7 @@ thead.thead-inverse th,
     height: 40px;
     line-height: 40px;
     font-weight: 300;
-    font-size: 1.125rem;
+    font-size: 1.45rem;
     margin: 0;
     border-radius: 50%; }
   .bootstrap-datetimepicker-widget button[data-action] {

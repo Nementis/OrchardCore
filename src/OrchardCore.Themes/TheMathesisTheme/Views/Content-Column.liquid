@@ -17,87 +17,110 @@
 {% shape "menu", alias: "alias:site-menu", cache_id: "site-menu-sticky", cache_tag: "alias:site-menu", alternate: "Menu__Sticky" %}
 
 <div class="main main-raised" id="main" style="margin-top: 90px;">
-	<div class="container-fluid">
-		<div class="row flex-xl-nowrap">
+	<div class="container-fluid h100">
+		<div class="row flex-xl-nowrap h100">
 			<div class="col-md-3 col-xl-2 bd-sidebar">
-				<div class="py-2 bd-find">
-					<input type="text" class="form-control" placeholder="Filter..." name="search" autocomplete="off">
-				</div>
-				<div id="tree" class="bd-tree">
-					{% assign current-url = Model.ContentItem | display_url %}
-					{% assign magazine = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
-					{% assign magazineTitle = magazine.ContentItem.Content.TitlePart.Title %}
-					<ul id="treeData" style="display: none;">
-						<li id="{{magazineTitle}}" class="folder expanded">
-							{{magazineTitle}}
-							{% assign magazine-columns = magazine.Content.ListPart%}
-							<ul>
-								{% for columnContentItem in magazine-columns.ContentItems %}
-									{% assign column = columnContentItem | shape_build_display %}
-									{% assign columnUrl = columnContentItem | display_url %}
-									{% assign column-title = columnContentItem.Content.TitlePart.Title%}
-									{% if current-url == columnUrl %}
-										{% assign node-class = "folder expanded" %}
-									{% else %}
-										{% assign node-class = "folder" %}
-									{% endif %}
-									<li id="{{magazineTitle}}.{{column-title}}" class="{{node-class}}">
-										<a href="{{columnUrl}}" target ="_top">
-											{{column-title}}
-										</a>
+				<div class="h-100 d-flex flex-column">
+					<div class="row">
+						<div class="py-2 bd-find col-12">
+							<input type="text" class="form-control" placeholder="Filter..." name="search" autocomplete="off">
+						</div>
+					</div>
+					<div class="row flex-grow-1">
+						<div class="col-12">
+							<div id="tree" class="bd-tree">
+								{% assign current-url = Model.ContentItem | display_url %}
+								{% assign magazine = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] | shape_build_display %}
+								{% assign magazineTitle = magazine.ContentItem.Content.TitlePart.Title %}
+								<ul id="treeData" style="display: none;">
+									<li id="{{magazineTitle}}" class="folder expanded">
+										{{magazineTitle}}
+										{% assign magazine-columns = magazine.Content.ListPart%}
 										<ul>
-											{% for content in column.Content.ListPart.ContentItems %}
-												{% if content.ContentType == "Article" %}
-													{% assign article-content = content.ContentItemId | content_item_id %}
-													{% assign article-url = article-content | display_url %}
-													<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
-														<a href="{{ article-url }}" target = "_top" >
-															{{ article-content.Content.TitlePart.Title }}
-														</a>
-													</li>
+											{% for columnContentItem in magazine-columns.ContentItems %}
+												{% assign column = columnContentItem | shape_build_display %}
+												{% assign columnUrl = columnContentItem | display_url %}
+												{% assign column-title = columnContentItem.Content.TitlePart.Title%}
+												{% if current-url == columnUrl %}
+													{% assign node-class = "folder expanded" %}
 												{% else %}
-													{% assign series = content | shape_build_display %}
-													{% assign seriesUrl = content | display_url %}
-													{% assign series-title = content.Content.TitlePart.Title%}
-													{% if current-url == seriesUrl %}
-														{% assign node-class = "folder expanded" %}
-													{% else %}
-														{% assign node-class = "folder" %}
-													{% endif %}
-													<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
-														<a href="{{seriesUrl}}" target ="_top">
-															{{series-title}}
-														</a>
-														<ul>
-															{% for article in series.Content.ListPart.ContentItems %}
-																{% assign article-content = article.ContentItemId | content_item_id %}
+													{% assign node-class = "folder" %}
+												{% endif %}
+												<li id="{{magazineTitle}}.{{column-title}}" class="{{node-class}}">
+													<a href="{{columnUrl}}" target ="_top">
+														{{column-title}}
+													</a>
+													<ul>
+														{% for content in column.Content.ListPart.ContentItems %}
+															{% if content.ContentType == "Article" %}
+																{% assign article-content = content.ContentItemId | content_item_id %}
 																{% assign article-url = article-content | display_url %}
-																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																<li id="{{magazineTitle}}.{{column-title}}.{{ article-content.Content.TitlePart.Title }}">
 																	<a href="{{ article-url }}" target = "_top" >
 																		{{ article-content.Content.TitlePart.Title }}
 																	</a>
 																</li>
-															{% endfor %}
-														</ul>
-													</li>
-												{% endif %}
-											{% endfor %}
+															{% else %}
+																{% assign series = content | shape_build_display %}
+																{% assign seriesUrl = content | display_url %}
+																{% assign series-title = content.Content.TitlePart.Title%}
+																{% if current-url == seriesUrl %}
+																	{% assign node-class = "folder expanded" %}
+																{% else %}
+																	{% assign node-class = "folder" %}
+																{% endif %}
+																<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}" class="{{node-class}}">
+																	<a href="{{seriesUrl}}" target ="_top">
+																		{{series-title}}
+																	</a>
+																	<ul>
+																		{% for article in series.Content.ListPart.ContentItems %}
+																			{% assign article-content = article.ContentItemId | content_item_id %}
+																			{% assign article-url = article-content | display_url %}
+																			<li id="{{magazineTitle}}.{{column-title}}.{{series-title}}.{{ article-content.Content.TitlePart.Title }}">
+																				<a href="{{ article-url }}" target = "_top" >
+																					{{ article-content.Content.TitlePart.Title }}
+																				</a>
+																			</li>
+																		{% endfor %}
+																	</ul>
+																</li>
+															{% endif %}
+														{% endfor %}
+													</ul>
+												</li>
+											{% endfor%}
 										</ul>
 									</li>
-								{% endfor%}
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="bd-sq-banner text-center">
-					{% render_section "LeftSquareBanner", required: false %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row align-items-end justify-content-center bd-sq-banner">
+						<div class="col">
+							{% render_section "LeftSquareBanner", required: false %}
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="d-none d-xl-block col-xl-2 bd-toc">
-				<div id="tagcloud" class="bd-cloud" >
-				</div>
-				<div class="bd-sq-banner text-center">
-					{% render_section "RightSquareBanner", required: false %}
+				<div class="h-100 d-flex flex-column">
+					<div class="row">
+						<div class="py-2 mth-toc-info col-12">
+							<b>Tag Cloud</b>
+						</div>
+					</div>
+					<div class="row flex-grow-1">
+						<div class="col-12">
+							<div id="tagcloud" class="bd-cloud" >
+							</div>
+						</div>
+					</div>
+					<div class="row align-items-end justify-content-center bd-sq-banner">
+						<div class="col">
+							{% render_section "RightSquareBanner", required: false %}
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-9 col-xl-8 pl-md-5 bd-content py-2">
