@@ -1,35 +1,38 @@
-<div class="row w-90 mx-auto">
-	<div class="content-abstract">
+<div class="row w-90 mx-auto justify-content-center">
+	<div class="mth-content mth-content-abstract">
 		<h1 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h1>
-
+	</div>
+</div>
+<div class="row w-90 mx-auto">
+	<div class="mth-content mth-content-abstract">
 		{% assign conditionCount = 0 %}
 		{% assign checkedConditions = 0 %}
 
 		{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
 
 		{% if stringParts.size == 1 %}
-			{% if Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
-				{% assign conditionCount = conditionCount + 1%}
-			{% endif %}
-			{% if Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
-				{% assign conditionCount = conditionCount + 1%}
-			{% endif %}
+		{% if Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+		{% endif %}
+		{% if Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+		{% endif %}
 
-			{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
-			{% for cookie in cookies %}
-				{% if cookie == 't' and Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
-					{% assign checkedConditions = checkedConditions + 1 %}
-				{% endif %}
-				{% if cookie == 'a' and Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
-					{% assign checkedConditions = checkedConditions + 1 %}
-				{% endif %}
-			{% endfor%}
+		{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+		{% for cookie in cookies %}
+		{% if cookie == 't' and Model.ContentItem.Content.Abstract.TrackingRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% if cookie == 'a' and Model.ContentItem.Content.Abstract.AdvertiseRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% endfor%}
 		{% endif %}
 
 		{% if checkedConditions >= conditionCount %}
-			{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+		{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
 		{% else %}
-			{{ Model.ContentItem.Content.Abstract.AlternateContent.Html | raw }}
+		{{ Model.ContentItem.Content.Abstract.AlternateContent.Html | raw }}
 		{% endif %}
 	</div>
 </div>

@@ -1113,37 +1113,24 @@ h3 a:hover, h3 a:focus {
     -ms-grid-row-align: stretch !important;
     align-self: stretch !important; } }
 
-.content-abstract {
-  text-align: center;
-  float: none;
-  overflow: hidden; }
-  .content-abstract > h1 {
-    font-family: Montserrat,Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
-    font-weight: 700;
-    text-transform: uppercase;
-    color: black; }
-  .content-abstract > p {
-    color: black;
-    text-align: justify;
-    font-size: 1.1rem;
-    line-height: 1.75rem; }
-
-.content-chapter > p {
+.mth-content > p {
   color: black;
   text-align: justify;
   font-size: 1.1rem;
   line-height: 1.75rem; }
 
-.content-paragraph > p {
+.mth-content > ul > li {
   color: black;
   text-align: justify;
   font-size: 1.1rem;
   line-height: 1.75rem; }
+  .mth-content > ul > li > strong {
+    font-weight: 700; }
 
-.content-sub-paragraph > p {
-  color: black;
-  text-align: justify;
-  font-size: 1.1rem;
-  line-height: 1.75rem; }
+.mth-content-abstract > h1 {
+  font-family: Montserrat,Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+  font-weight: 700;
+  text-transform: uppercase;
+  color: black; }
 
 /*# sourceMappingURL=mathesis-kit.css.map */

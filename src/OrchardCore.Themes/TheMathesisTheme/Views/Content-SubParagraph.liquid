@@ -1,5 +1,5 @@
 <div class="row w-90 mx-auto">
-	<div class="pt-5 content-sub-paragraph">
+	<div class="pt-1 mth-content mth-content-sub-paragraph">
 		{% assign conditionCount = 0 %}
 		{% assign checkedConditions = 0 %}
 
@@ -25,10 +25,10 @@
 		{% endif %}
 
 		{% if checkedConditions >= conditionCount %}
-			<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h5>
+			<h4 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h4>
 			{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
 		{% else %}
-			<h5 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h5>
+			<h4 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h4>
 			{{ Model.ContentItem.Content.SubParagraph.AlternateContent.Html | raw }}
 		{% endif %}
 	</div>
