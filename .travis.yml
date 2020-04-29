@@ -36,7 +36,7 @@ script:
         rm -rf ./App_Data;
         dotnet publish -c Release -o $TRAVIS_BUILD_DIR/.build/release;
         cd $TRAVIS_BUILD_DIR;
-        docker build -t nementis/orchard:latest -t nementis/orchard:1.1.1 .;
+        docker build -t nementis/orchard:latest -t nementis/orchard:1.1.2 .;
         echo "$DOCKER_PASS" | docker login -u="$DOCKER_USER" --password-stdin;
         docker push nementis/orchard;
     fi;
