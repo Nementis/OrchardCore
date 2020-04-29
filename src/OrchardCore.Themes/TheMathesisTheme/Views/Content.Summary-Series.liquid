@@ -16,7 +16,7 @@
 				<span class="badge badge-primary badge-pill">{{tag}}</span>
 				{% endfor %}
 			</p>
-			<p class="card-description mth-text-base">
+			<p class="mth-text-base">
 				{% if Model.ContentItem.Content.Series.Description.Text.size > 475 %}
 				{{Model.ContentItem.Content.Series.Description.Text | truncate: 475 | raw}}
 				{% else %}
@@ -47,7 +47,7 @@
 				<span class="badge badge-primary badge-pill">{{tag}}</span>
 				{% endfor %}
 			</p>
-			<p class="card-description mth-text-base">
+			<p class="mth-text-base">
 				{% if Model.ContentItem.Content.Series.Description.Text.size > 475 %}
 				{{Model.ContentItem.Content.Series.Description.Text | truncate: 475 | raw}}
 				{% else %}

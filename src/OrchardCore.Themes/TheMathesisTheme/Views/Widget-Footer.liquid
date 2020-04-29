@@ -30,11 +30,7 @@
 			</ul>
 		</nav>
 		<div class="copyright float-right">
-			Copyright &copy; {{ Model.ContentItem.Content.Footer.CopyrightStartDate.Value | date: "%Y" }} - 
-			<script>
-				document.write(new Date().getFullYear())
-			</script>&nbsp;
-			{{ Site.SiteName }}
+			Copyright &copy; {{ Model.ContentItem.Content.Footer.CopyrightStartDate.Value | date: "%Y" }} - {{ "now" | date: "%Y" }} {{ Site.SiteName }}
 		</div>
 	</div>
 </footer>
