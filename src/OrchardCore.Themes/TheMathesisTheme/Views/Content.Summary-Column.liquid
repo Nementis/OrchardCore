@@ -7,6 +7,7 @@
 				<div class="colored-shadow" style="background-image: url('{{ Model.ContentItem.Content.Column.Image.Paths.first | asset_url }}'); opacity: 1;">
 				</div>
 			</div>
+			<div style="margin-left:15px;padding-top:3px;"><a href="{{Model.ContentItem.Content.Column.ImageAttribution.Url | href}}">{{Model.ContentItem.Content.Column.ImageAttribution.Text}}</a></div>
 			<div class="card-body">
 				<h6 class="card-category text-info">{{ Model.ContentItem.Content.Column.Field.Text }}</h6>
 				<div class="card-description mth-text-base">

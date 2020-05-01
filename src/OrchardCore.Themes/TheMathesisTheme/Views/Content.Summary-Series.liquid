@@ -5,6 +5,9 @@
 			<div class="card-header card-header-image">
 				<img class="img" src="{{Model.ContentItem.Content.Series.Image.Paths.first | asset_url }}">
 			</div>
+			<div>
+				<a href="{{Model.ContentItem.Content.Series.ImageAttribution.Url | href}}">{{Model.ContentItem.Content.Series.ImageAttribution.Text}}</a>
+			</div>
 		</div>
 		<div class="col-md-8">
 			<h3 class="card-title">
@@ -66,6 +69,9 @@
 		<div class="col-md-4">
 			<div class="card-header card-header-image">
 				<img class="img" src="{{Model.ContentItem.Content.Series.Image.Paths.first | asset_url }}">
+			</div>
+			<div>
+				<a href="{{Model.ContentItem.Content.Series.ImageAttribution.Url | href}}">{{Model.ContentItem.Content.Series.ImageAttribution.Text}}</a>
 			</div>
 		</div>
 	</div>
