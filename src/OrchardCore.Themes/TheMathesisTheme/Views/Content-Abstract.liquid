@@ -5,10 +5,12 @@
 </div>
 <div class="row w-90 mx-auto">
 	<div class="mth-content mth-content-abstract">
-		<div style="float:left;;width:40%;margin-right:20px;">
-			<img style="object-fit: cover;width:100%" src="{{Model.ContentItem.Content.Abstract.Image.Paths.first | asset_url }}">
-			<a href="{{Model.ContentItem.Content.Abstract.ImageAttribution.Url | href}}">{{Model.ContentItem.Content.Abstract.ImageAttribution.Text}}</a>
-		</div>
+		{% if Model.ContentItem.Content.Abstract.Image.Paths != nil %}
+			<div style="float:left;;width:40%;margin-right:20px;">
+				<img style="object-fit: cover;width:100%" src="{{Model.ContentItem.Content.Abstract.Image.Paths.first | asset_url }}">
+				<a href="{{Model.ContentItem.Content.Abstract.ImageAttribution.Url | href}}">{{Model.ContentItem.Content.Abstract.ImageAttribution.Text}}</a>
+			</div>
+		{% endif %}
 		{% assign conditionCount = 0 %}
 		{% assign checkedConditions = 0 %}
 

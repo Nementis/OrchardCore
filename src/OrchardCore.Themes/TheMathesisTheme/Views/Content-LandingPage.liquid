@@ -5,7 +5,13 @@
 	{% endif %}
 {% endzone %}
 
-{% shape "menu", alias: "alias:site-menu", cache_id: "site-menu", cache_tag: "alias:site-menu" %}
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "it-IT" %}
+	{% shape "menu", alias: "alias:it-IT-site-menu", cache_id: "it-IT-site-menu", cache_expires_after: "00:05:00", cache_tag: "it-IT-site-menu" %}
+{% endif %}
+
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "en-US" %}
+	{% shape "menu", alias: "alias:en-US-site-menu", cache_id: "en-US-site-menu", cache_expires_after: "00:05:00", cache_tag: "en-US-site-menu" %}
+{% endif %}
 
 {% if Model.Content.LandingHeader %}
 	{{ Model.Content.LandingHeader | shape_render }}
@@ -20,8 +26,10 @@
 		<div class="text-center">
 			<h2 class="mth-section-title">{{ Model.ContentItem.Content.LandingHeader.Header.Text }}</h2>
 		</div>
-		<div class="w-90 mx-auto">
-			{{ Model.ContentItem.Content.LandingPage.Description.Html | raw }}
+		<div class="row w-90 mx-auto">
+			<div class="mth-content mth-content-abstract">
+				{{ Model.ContentItem.Content.LandingPage.Description.Html | raw }}
+			</div>
 		</div>
 		{{ Model.Content.ListPart | shape_render }}
 	</div>

@@ -2,7 +2,14 @@
 	<title>{{Site.SiteName}} - {{Model.ContentItem.Content.TitlePart.Title}}</title>
 {% endzone %}
 
-{% shape "menu", alias: "alias:site-menu", cache_id: "site-menu-sticky", cache_tag: "alias:site-menu", alternate: "Menu__Sticky" %}
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "it-IT" %}
+{% shape "menu", alias: "alias:it-IT-site-menu", cache_id: "it-IT-site-menu-sticky", cache_expires_after: "00:05:00", cache_tag: "it-IT-site-menu-sticky", alternate: "Menu__Sticky" %}
+{% endif %}
+
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "en-US" %}
+{% shape "menu", alias: "alias:en-US-site-menu", cache_id: "en-US-site-menu-sticky", cache_expires_after: "00:05:00", cache_tag: "en-US-site-menu-sticky", alternate: "Menu__Sticky" %}
+{% endif %}
+
 
 <div class="main main-raised" id="main" style="margin-top: 90px;">
 	<div class="container-fluid">

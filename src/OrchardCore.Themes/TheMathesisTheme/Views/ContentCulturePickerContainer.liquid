@@ -1,0 +1,28 @@
+<li class="nav-item dropdown">
+	{% if Model.CurrentCulture.Name == "it-IT" %}
+		<a class="nav-link dropdown-toggle" href="#" id="oc-culture-picker" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			{{ 'menu/flag-italy.png' | asset_url | img_tag }}&nbsp;Italiano
+		</a>
+	{% endif %}
+
+	{% if Model.CurrentCulture.Name == "en-US" %}
+	<a class="nav-link dropdown-toggle" href="#" id="oc-culture-picker" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{{ 'menu/flag-usa.png' | asset_url | img_tag }}&nbsp;English
+	</a>
+	{% endif %}
+
+	<div class="dropdown-menu" aria-labelledby="oc-culture-picker">
+		{% for culture in Model.SupportedCultures %}
+			{% if culture.Name != Model.CurrentCulture.Name  %}
+				<a class="dropdown-item" href="{{culture.Name | switch_culture_url }}">
+					{% if culture.Name == "en-US" %}
+						{{ 'menu/flag-usa.png' | asset_url | img_tag }}&nbsp;Inglese
+					{% endif %}
+					{% if culture.Name == "it-IT" %}
+					{{ 'menu/flag-italy.png' | asset_url | img_tag }}&nbsp;Italian
+					{% endif %}
+				</a>
+			{% endif %}
+		{% endfor %}
+	</div>
+</li>
