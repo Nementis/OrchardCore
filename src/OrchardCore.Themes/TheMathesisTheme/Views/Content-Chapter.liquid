@@ -6,29 +6,34 @@
 		{% assign stringParts = Request.Headers.User-agent | split: "Google" %}
 
 		{% if stringParts.size == 1 %}
-			{% if Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
-				{% assign conditionCount = conditionCount + 1%}
-			{% endif %}
-			{% if Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
-				{% assign conditionCount = conditionCount + 1%}
-			{% endif %}
+		{% if Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+		{% endif %}
+		{% if Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
+		{% assign conditionCount = conditionCount + 1%}
+		{% endif %}
 
-			{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
-			{% for cookie in cookies %}
-				{% if cookie == 't' and Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
-					{% assign checkedConditions = checkedConditions + 1 %}
-				{% endif %}
-				{% if cookie == 'a' and Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
-					{% assign checkedConditions = checkedConditions + 1 %}
-				{% endif %}
-			{% endfor%}
+		{% assign cookies = Request.Cookies.cookiesConsentOptions | split: "," %}
+		{% for cookie in cookies %}
+		{% if cookie == 't' and Model.ContentItem.Content.Chapter.TrackingRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% if cookie == 'a' and Model.ContentItem.Content.Chapter.AdvertiseRequired.Value == true %}
+		{% assign checkedConditions = checkedConditions + 1 %}
+		{% endif %}
+		{% endfor%}
 		{% endif %}
 
 		{% if checkedConditions >= conditionCount %}
 			<h2 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h2>
-			{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+			{% if Model.ContentItem.Content.Chapter.Image.Paths != nil %}
+			<div style="float:left;;width:40%;margin-right:20px;">
+				<img style="object-fit: cover;width:100%" src="{{Model.ContentItem.Content.Chapter.Image.Paths.first | asset_url }}">
+			</div>
+			{% endif %}
+			{{ Model.Content.HtmlBodyPart | shape_render}}
 		{% else %}
-			<h2 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h2>
+		<h2 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h2>
 			{{ Model.ContentItem.Content.Chapter.AlternateContent.Html | raw }}
 		{% endif %}
 	</div>

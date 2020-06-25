@@ -1,7 +1,10 @@
 <nav class="navbar fixed-top navbar-expand-lg bg-primary">
 	<div class="container">
 		<div class="navbar-translate">
-			<a class="navbar-brand" href="{{ "home" | haref }}">{{ Site.SiteName }}</a>
+			{% capture myHome %}
+			{{Request.PathBase}}/{{Model.ContentItem.Content.LocalizationPart.Culture}}/Home
+			{% endcapture %}
+			<a class="navbar-brand" href="{{myHome | href }}">{{ Site.SiteName }}</a>
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="sr-only">Toggle navigation</span>

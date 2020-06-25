@@ -1,6 +1,6 @@
 <div class="row w-90 mx-auto justify-content-center">
 	<div class="mth-content mth-content-abstract">
-		<h1 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h1>
+		<h2 class="mth-section-title" id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h2>
 	</div>
 </div>
 <div class="row w-90 mx-auto">
@@ -36,7 +36,7 @@
 		{% endif %}
 
 		{% if checkedConditions >= conditionCount %}
-		{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+		{{ Model.Content.HtmlBodyPart | shape_render}}
 		{% else %}
 		{{ Model.ContentItem.Content.Abstract.AlternateContent.Html | raw }}
 		{% endif %}

@@ -2,7 +2,13 @@
 	<title>{{Site.SiteName}} - {{Model.ContentItem.Content.TitlePart.Title}}</title>
 {% endzone %}
 
-{% shape "menu", alias: "alias:site-menu", cache_id: "site-menu", cache_tag: "alias:site-menu" %}
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "it-IT" %}
+	{% shape "menu", alias: "alias:it-IT-site-menu", cache_tag: "it-IT-site-menu" %}
+{% endif %}
+
+{% if Model.ContentItem.Content.LocalizationPart.Culture == "en-US" %}
+	{% shape "menu", alias: "alias:en-US-site-menu", cache_tag: "en-US-site-menu" %}
+{% endif %}
 
 {% if Model.Content.LandingHeader %}
 	{{ Model.Content.LandingHeader | shape_render }}

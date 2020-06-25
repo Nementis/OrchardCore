@@ -26,9 +26,14 @@
 
 		{% if checkedConditions >= conditionCount %}
 			<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}">{{ Model.ContentItem.Content.TitlePart.Title }}</h3>
-			{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}
+			{% if Model.ContentItem.Content.Paragraph.Image.Paths != nil %}
+			<div style="float:left;;width:40%;margin-right:20px;">
+				<img style="object-fit: cover;width:100%" src="{{Model.ContentItem.Content.Paragraph.Image.Paths.first | asset_url }}">
+			</div>
+			{% endif %}
+			{{ Model.Content.HtmlBodyPart | shape_render}}
 		{% else %}
-			<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h3>
+		<h3 id="{{ Model.ContentItem.Content.TitlePart.Title | slugify }}"></h3>
 			{{ Model.ContentItem.Content.Paragraph.AlternateContent.Html | raw }}
 		{% endif %}
 	</div>

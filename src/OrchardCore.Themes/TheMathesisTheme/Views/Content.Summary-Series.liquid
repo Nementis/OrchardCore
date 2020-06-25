@@ -15,8 +15,10 @@
 			</h3>
 			<p>
 				{% assign tags = Model.ContentItem.Content.Series.Tags.Text | split: "," %}
+				{% assign parent = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
+				{% assign parentUrl = parent | display_url %}
 				{% for tag in tags %}
-				<span class="badge badge-primary badge-pill">{{tag}}</span>
+				<a href="{{parentUrl}}?tag={{tag}}"><span class="badge badge-primary badge-pill">{{tag}}</span></a>
 				{% endfor %}
 			</p>
 			<p class="mth-text-base">
@@ -46,8 +48,10 @@
 			</h3>
 			<p>
 				{% assign tags = Model.ContentItem.Content.Series.Tags.Text | split: "," %}
+				{% assign parent = Content.ContentItemId[Model.ContentItem.Content.ContainedPart.ListContentItemId] %}
+				{% assign parentUrl = parent | display_url %}
 				{% for tag in tags %}
-				<span class="badge badge-primary badge-pill">{{tag}}</span>
+				<a href="{{parentUrl}}?tag={{tag}}"><span class="badge badge-primary badge-pill">{{tag}}</span></a>
 				{% endfor %}
 			</p>
 			<p class="mth-text-base">
